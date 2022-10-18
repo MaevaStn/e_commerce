@@ -13,27 +13,12 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $idCategorie = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomCategorie = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdCategorie(): ?int
-    {
-        return $this->idCategorie;
-    }
-
-    public function setIdCategorie(int $idCategorie): self
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
     }
 
     public function getNomCategorie(): ?string
