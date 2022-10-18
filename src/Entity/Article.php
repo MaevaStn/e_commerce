@@ -22,11 +22,12 @@ class Article
     #[ORM\Column(nullable: true)]
     private ?float $prixArticle = null;
 
-    #[ORM\Column(length: 200, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $descriptionArticle = null;
 
-    #[ORM\Column]
-    private ?int $idCategorie = null;
+    #[ORM\ManyToOne(inversedBy: 'article')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $Categorie = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -87,14 +88,14 @@ class Article
         return $this;
     }
 
-    public function getIdCategorie(): ?int
+    public function getCategorie(): ?Categorie
     {
-        return $this->idCategorie;
+        return $this->Categorie;
     }
 
-    public function setIdCategorie(int $idCategorie): self
+    public function setCategorie(?Categorie $Categorie): self
     {
-        $this->idCategorie = $idCategorie;
+        $this->Categorie = $Categorie;
 
         return $this;
     }
