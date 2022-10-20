@@ -18,13 +18,13 @@ class Categorie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomCategorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Article::class)]
-    private Collection $article;
+    // #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Article::class)]
+    // private Collection $article;
 
-    public function __construct()
-    {
-        $this->article = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->article = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -43,33 +43,33 @@ class Categorie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Article>
-     */
-    public function getArticle(): Collection
-    {
-        return $this->article;
-    }
+    // /**
+    //  * @return Collection<int, Article>
+    //  */
+    // public function getArticle(): Collection
+    // {
+    //     return $this->article;
+    // }
 
-    public function addArticle(Article $article): self
-    {
-        if (!$this->article->contains($article)) {
-            $this->article->add($article);
-            $article->setCategorie($this);
-        }
+    // public function addArticle(Article $article): self
+    // {
+    //     if (!$this->article->contains($article)) {
+    //         $this->article->add($article);
+    //         $article->setCategorie($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeArticle(Article $article): self
-    {
-        if ($this->article->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getCategorie() === $this) {
-                $article->setCategorie(null);
-            }
-        }
+    // public function removeArticle(Article $article): self
+    // {
+    //     if ($this->article->removeElement($article)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($article->getCategorie() === $this) {
+    //             $article->setCategorie(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

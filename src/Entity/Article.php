@@ -29,11 +29,11 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $Categorie = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $type = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $vidArticle = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $vidArticle = null;
 
     public function getId(): ?int
     {
@@ -105,17 +105,17 @@ class Article
         return $this->type;
     }
 
-    public function setType(string $type): self
-    {
-        $this->type = $type;
+    // public function setType(string $type): self
+    // {
+    //     $this->type = $type;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getVidArticle(): ?string
-    {
-        return $this->vidArticle;
-    }
+    // public function getVidArticle(): ?string
+    // {
+    //     return $this->vidArticle;
+    // }
 
     public function setVidArticle(string $vidArticle): self
     {
