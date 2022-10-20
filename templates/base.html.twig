@@ -42,6 +42,18 @@
 						<a class="nav-link {% if app.request.get('_route') == 'createCategorie' %}active{% endif %}" href="createCategorie">Add Catégorie</a>
 					</li>
 				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.get('_route') == 'register' %}active{% endif %}" href="register">Inscription</a>
+				</li>
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'logout' %}active{% endif %}" href="logout">Log Out</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'login' %}active{% endif %}" href="login">Log In</a>
+					</li>
+				{% endif %}
 			</ul>
 		</nav>
 
