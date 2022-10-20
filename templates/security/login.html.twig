@@ -22,10 +22,10 @@
 							<input type="password" name="password" class="form-control" id="inputPassword">
 						</div>
 						<input type="hidden" name="_csrf_token" value="{{csrf_token('authenticate')}}">
-						<div class="col-6 m-auto mt-4 ps-3 form-check ">
+						<div class="col-6 ps-1 mt-4 m-auto form-check ">
 							<button type="submit" class="btn btn-secondary col-12">Connexion</button>
 						</div>
-						<div class="col-8 ms-4 mt-4">
+						<div class="col-8 ms-2 mt-4">
 							<a {% if app.request.get('_route') == 'register' %} active {% endif %} href="register" style="text-decoration: none; color: white">Create an account</a>
 						</div>
 					</div>
