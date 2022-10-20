@@ -105,21 +105,18 @@ class Article
         return $this->type;
     }
 
-    // public function setType(string $type): self
-    // {
-    //     $this->type = $type;
+    // ajout propriété de type string qui contient le nom du fichier que je vais uploader $brochureFilename
+    // #[ORM\Column(type: 'string')]
+    private $brochureFilename;
 
-    //     return $this;
-    // }
-
-    // public function getVidArticle(): ?string
-    // {
-    //     return $this->vidArticle;
-    // }
-
-    public function setVidArticle(string $vidArticle): self
+    public function getBrochureFilename()
     {
-        $this->vidArticle = $vidArticle;
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
 
         return $this;
     }
