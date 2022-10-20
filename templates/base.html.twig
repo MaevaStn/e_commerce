@@ -27,21 +27,21 @@
 				<li class="nav-item">
 					<a class="nav-link {% if app.request.get('_route') == 'article' %}active{% endif %}" href="article">Article</a>
 				</li>
-				{# a réactiver plus tard : #}
-				{# {% if is_granted('ROLE_ADMIN') %} #}
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'createArticle' %}active{% endif %}" href="createArticle">Add Article</a>
-				</li>
-				{# {% endif %} #}
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'createArticle' %}active{% endif %}" href="createArticle">Add Article</a>
+					</li>
+				{% endif %}
 				<li class="nav-item">
 					<a class="nav-link {% if app.request.get('_route') == 'categorie' %}active{% endif %}" href="categorie">Catégorie</a>
 				</li>
-				{# a réactiver plus tard : #}
-				{# {% if is_granted('ROLE_ADMIN') %} #}
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'createCategorie' %}active{% endif %}" href="createCategorie">Add Catégorie</a>
-				</li>
-				{# {% endif %} #}
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'createCategorie' %}active{% endif %}" href="createCategorie">Add Catégorie</a>
+					</li>
+				{% endif %}
 			</ul>
 		</nav>
 
