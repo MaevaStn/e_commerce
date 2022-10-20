@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20221018120240 extends AbstractMigration
+final class Version20221019081239 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,18 @@ final class Version20221018120240 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE article (id INT AUTO_INCREMENT NOT NULL, categorie_id INT NOT NULL, nom_article VARCHAR(80) DEFAULT NULL, image_article VARCHAR(255) DEFAULT NULL, prix_article DOUBLE PRECISION DEFAULT NULL, description_article VARCHAR(255) DEFAULT NULL, type VARCHAR(255) NOT NULL, vid_article VARCHAR(255) NOT NULL, INDEX IDX_23A0E66BCF5E72D (categorie_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE article CHANGE description_article description_article VARCHAR(255) DEFAULT NULL, CHANGE id_categorie categorie_id INT NOT NULL');
         $this->addSql('ALTER TABLE article ADD CONSTRAINT FK_23A0E66BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
+        $this->addSql('CREATE INDEX IDX_23A0E66BCF5E72D ON article (categorie_id)');
+        $this->addSql('ALTER TABLE categorie DROP id_categorie');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E66BCF5E72D');
-        $this->addSql('DROP TABLE article');
+        $this->addSql('DROP INDEX IDX_23A0E66BCF5E72D ON article');
+        $this->addSql('ALTER TABLE article CHANGE description_article description_article VARCHAR(200) DEFAULT NULL, CHANGE categorie_id id_categorie INT NOT NULL');
+        $this->addSql('ALTER TABLE categorie ADD id_categorie INT NOT NULL');
     }
 }
