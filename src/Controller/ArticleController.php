@@ -24,8 +24,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Categorie;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\FileUploader;
-// use Symfony\Component\HttpFoundation\BinaryFileResponse;
-// use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ArticleController extends AbstractController
 {
@@ -90,11 +90,44 @@ class ArticleController extends AbstractController
             $article->setNomArticle($form->getData()['nomArticle']);
             $article->setPrixArticle($form->getData()['prixArticle']);
             $article->setDescriptionArticle($form->getData()['descriptionArticle']);
-            // on récupére photo et on l'ajoute au niveau de notre formulaire
-            $article = $form->get('imageArticle')->getData();
+            // $image= $article->getImageArticle()
+            $image = $form['imageArticle']->getData();
+            $image = $form->get('imageArticle')->getData();
+            //////////////////////////////////////////////////////
             $article->setCategorie($form->getData()['categorie']);
+
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($article);
+
+            if ($image) {
+                // si oui , va me récupérer l'originalName
+                // puis, création d'un nom de fichier :
+                // renommage du fichier :
+                // detection du nom original de notre dossier : (originalFilename)
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                // création du slug associé à notre originalFilname
+                // enleve tout comme les // ....
+                $safeFilename = $slugger->slug($originalFilename);
+                // récupération du nouveau Filename av un id unique (généré au moment ou j'appelle la méthode) et l'extension de la méthode :
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+
+                // va aller copier le contenu du fichier temporaire et le stocker ds l'application
+                try {
+                    // va faire un move du newFilename vers cet endroit :  $this->getParameter('articles_directory'), et cet endroit se trouve dans param au niveau de service.yaml,
+                    $image->move(
+                        $this->getParameter('articles_directory'),
+                        $newFilename
+                    );
+                    // si problème avec affichage :
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                // objet article $article, récupère le newFilename et ajoute le à cette image :
+                $article->setImageArticle($newFilename);
+            }
+
             $entityManager->flush();
             dump($entityManager);
             return $this->redirectToRoute('article_success');

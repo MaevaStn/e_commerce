@@ -20,10 +20,10 @@
 
 	{% for art in articles %}
 		<p>{{art.getNomArticle}}
-			{# <img src={{art.getImageArticle}} alt="image"> #}
-			{# <img src={{asset(image/console-ps4.jpg)}}> #}
+			<img src={{art.getImageArticle}} alt="image">
 			{{art.getPrixArticle}}
 			{{art.getDescriptionArticle}}
-		{{art.getId}}
-	</p>
-{% endfor %}{% endblock %}
+			{{art.getId}}
+		</p>
+	{% endfor %}
+{% endblock %}
