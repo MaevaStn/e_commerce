@@ -5,6 +5,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,37 +18,44 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-// le bon :
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Categorie;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ArticleController extends AbstractController
 {
+
     #[Route('/article', name: 'app_article')]
-    public function index(ArticleRepository $articleRepository): response
+    public function index(ArticleRepository $articleRepository): Response
     {
+
         $articles = $articleRepository->findAll();
         dump($articles);
         return $this->render('article/index.html.twig', ['controller_name' => 'ArticleController', 'articles' => $articles]);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
+
+
     #[Route('/createArticle', name: 'create_article')]
 
-    public function new(Request $request, PersistenceManagerRegistry $doctrine, SluggerInterface $slugger)
+    public function new(Request $request, SluggerInterface $slugger, PersistenceManagerRegistry $doctrine)
     {
         $form = $this->createFormBuilder()
             ->add('nomArticle', TextType::class)
-            // j'utilise un FileType , permet d'avoir un input pour uploader le fichier en question
-            // resultat qui ne correspond pas au niveau de notre formulaire donc :
-            // et donc ajout de champ unmapped ensuite et mettre à jour ce champ ensuite av getters et setters
-            ->add('photo', FileType::class, [
-                'label' => 'imageArticle',
+            ->add('prixArticle', TextType::class)
+            ->add('descriptionArticle', TextType::class)
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nomCategorie',
+                'choice_value' => 'id',
+            ])
+            ->add('imageArticle', FileType::class, [
+                'label' => 'image article',
                 //// unmapped means that this field is not associated to any entity property
                 // pas de champp associé au fichier de notre entity : (il n'y a pas de champ qui s'appelle photo)
                 'mapped' => false,
@@ -65,13 +77,7 @@ class ArticleController extends AbstractController
                     ])
                 ],
             ])
-            ->add('prixArticle', TextType::class)
-            ->add('descriptionArticle', TextType::class)
-            ->add('categorie', EntityType::class, [
-                'class' => Categorie::class,
-                'choice_label' => 'nomCategorie',
-                'choice_value' => 'id',
-            ])
+
             ->add('save', SubmitType::class, ['label' => 'Créer article'])
             ->getForm();
 
@@ -83,52 +89,46 @@ class ArticleController extends AbstractController
 
             $article = new Article();
             $article->setNomArticle($form->getData()['nomArticle']);
-            // on récupére photo et on l'ajoute au niveau de notre formulaire
-            $photo = $form->get('photo')->getData();
             $article->setPrixArticle($form->getData()['prixArticle']);
             $article->setDescriptionArticle($form->getData()['descriptionArticle']);
+            // $image= $article->getImageArticle()
+            $image = $form['imageArticle']->getData();
+            $image = $form->get('imageArticle')->getData();
+            //////////////////////////////////////////////////////
             $article->setCategorie($form->getData()['categorie']);
+
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($article);
-            ///////////////////////////////////////////////
 
-            // verifier si on a uploader une image (photo) :
-            if ($photo) {
+            if ($image) {
                 // si oui , va me récupérer l'originalName
                 // puis, création d'un nom de fichier :
                 // renommage du fichier :
                 // detection du nom original de notre dossier : (originalFilename)
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 // création du slug associé à notre originalFilname
+                // enleve tout comme les // ....
                 $safeFilename = $slugger->slug($originalFilename);
                 // récupération du nouveau Filename av un id unique (généré au moment ou j'appelle la méthode) et l'extension de la méthode :
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
-                // Move the file to the directory where brochures are stored
-                // va aller copier le contenu du fichier temporaire que je vais uploader et le stocker ds l'application
+                // va aller copier le contenu du fichier temporaire et le stocker ds l'application
                 try {
-                    // va faire un move du newFilename vers cet endroit :  $this->getParameter('brochures_directory'), et cet endroit se trouve dans param au niveau de service.yaml,
-                    // donc aller le créer en modifiant le path
-                    $photo->move(
-                        // va me chercher le path du dossier vers lequel je dois uploader mon image et place le ici
+                    // va faire un move du newFilename vers cet endroit :  $this->getParameter('articles_directory'), et cet endroit se trouve dans param au niveau de service.yaml,
+                    $image->move(
                         $this->getParameter('articles_directory'),
-                        $newFilename
+                        // $newFilename
                     );
                     // si problème avec affichage :
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                // objet article $article, récupère le newFilename et ajoute le à cette image
-                $article->setBrochureFilename($newFilename);
-
-                // return $this->redirectToRoute('app_article_list');
+                // objet article $article, récupère le newFilename et ajoute le à cette image :
+                $article->setImageArticle($newFilename);
             }
-            //////////////////////////////////////////////////////////////////////////////////
+
             $entityManager->flush();
             dump($entityManager);
             return $this->redirectToRoute('article_success');
@@ -137,6 +137,7 @@ class ArticleController extends AbstractController
             'form' => $form->createView(), 'controller_name' => 'ArticleController',
         ));
     }
+
 
     #[Route("/success", name: "article_success")]
 
@@ -147,3 +148,23 @@ class ArticleController extends AbstractController
         ));
     }
 }
+
+
+
+// $product->setBrochureFilename(
+//     new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())
+// );
+
+// Vous pouvez utiliser le code suivant pour créer un lien vers l'image d'un produit :
+// <a href="{{ asset('uploads/articless/' ~ product.brochureFilename) }}">View brochure (PDF)</a>
+
+// //Récupération du dossier racine grace au kernel et ensuite ajout de l'emplacement du 
+        // //fichier
+        // $filename = $this->getParameter('Kernel.project_dir') . '/image/' . $imageArticle;
+        // //Si le fichier existe alors on le renvoi, sinon retour 404
+        // if (file_exists($filename)) {
+        //     //retour d'un new BinaryFileResponse avec le nom du fichier
+        //     return new BinaryFileResponse($filename);
+        // } else {
+        //     return new JsonResponse(null, 404);
+        // }

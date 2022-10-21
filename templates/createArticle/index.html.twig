@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<div class="row" style="margin-top: 7rem;">
-		<div class="card text-white bg-dark mt-5 mb-3 m-auto" style="max-width: 50rem; height: 32rem;">
+	<div class="row" style="margin-top: 5rem;">
+		<div class="card text-white bg-dark mt-5 mb-3 m-auto" style="max-width: 50rem; height: 37rem;">
+			<h1 class="m-auto mt-3">Créer un nouvel article</h1>
 			<div class="col mt-3">
 				{{ form_start(form) }}
-				<div class="col-7 text-center m-auto">
+				<div class="col-7 text-center m-auto mt-3">
 					{{ form_widget(form) }}
 				</div>
 				{{ form_end(form) }}
