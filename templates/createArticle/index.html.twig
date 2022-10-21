@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	{{ form_end(form) }}
+	<div class="row" style="margin-top: 7rem;">
+		<div class="card text-white bg-dark mt-5 mb-3 m-auto" style="max-width: 50rem; height: 32rem;">
+			<div class="col mt-3">
+				{{ form_start(form) }}
+				<div class="col-7 text-center m-auto">
+					{{ form_widget(form) }}
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}
