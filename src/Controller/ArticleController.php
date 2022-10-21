@@ -43,7 +43,7 @@ class ArticleController extends AbstractController
             // resultat qui ne correspond pas au niveau de notre formulaire donc :
             // et donc ajout de champ unmapped ensuite et mettre à jour ce champ ensuite av getters et setters
             ->add('photo', FileType::class, [
-                'label' => 'image article',
+                'label' => 'imageArticle',
                 //// unmapped means that this field is not associated to any entity property
                 // pas de champp associé au fichier de notre entity : (il n'y a pas de champ qui s'appelle photo)
                 'mapped' => false,
@@ -79,6 +79,7 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $form->getData();
+
 
             $article = new Article();
             $article->setNomArticle($form->getData()['nomArticle']);
