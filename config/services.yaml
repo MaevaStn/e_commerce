@@ -5,8 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 
 # création le article_directory paramètre qui a été utilisé dans le contrôleur pour spécifier le répertoire dans lequel les images articles doivent être stockées :
-parameters:
-  articles_directory: "%kernel.project_dir%/public/uploads/articles"
+ parameters:
+  articles_directory: "%kernel.project_dir%/public/images"
 services:
   # default configuration for services in *this* file
   _defaults:

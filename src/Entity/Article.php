@@ -105,19 +105,19 @@ class Article
         return $this->type;
     }
 
-    // ajout propriété de type string qui contient le nom du fichier que je vais uploader $brochureFilename
-    // #[ORM\Column(type: 'string')]
-    private $brochureFilename;
+    // // ajout propriété de type string qui contient le nom du fichier que je vais uploader $brochureFilename
+    // // #[ORM\Column(type: 'string')]
+    // private $brochureFilename;
 
-    public function getBrochureFilename()
-    {
-        return $this->brochureFilename;
-    }
+    // public function getBrochureFilename()
+    // {
+    //     return $this->brochureFilename;
+    // }
 
-    public function setBrochureFilename($brochureFilename)
-    {
-        $this->brochureFilename = $brochureFilename;
+    // public function setBrochureFilename($brochureFilename)
+    // {
+    //     $this->brochureFilename = $brochureFilename;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
