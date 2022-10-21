@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -22,41 +20,91 @@
 		{% endblock %}
 	</head>
 	<body>
-		<nav class=" navbar navbar-expand-lg navbar-light bg-light">
-			<ul class='nav nav-pills nav-fill'>
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'article' %}active{% endif %}" href="article">Article</a>
-				</li>
-
-				{% if is_granted('ROLE_ADMIN') %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'createArticle' %}active{% endif %}" href="createArticle">Add Article</a>
-					</li>
-				{% endif %}
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'categorie' %}active{% endif %}" href="categorie">Catégorie</a>
-				</li>
-
-				{% if is_granted('ROLE_ADMIN') %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'createCategorie' %}active{% endif %}" href="createCategorie">Add Catégorie</a>
-					</li>
-				{% endif %}
-				<li class="nav-item">
-					<a class="nav-link {% if app.request.get('_route') == 'register' %}active{% endif %}" href="register">Inscription</a>
-				</li>
-				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'logout' %}active{% endif %}" href="logout">Log Out</a>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a class="nav-link {% if app.request.get('_route') == 'login' %}active{% endif %}" href="login">Log In</a>
-					</li>
-				{% endif %}
-			</ul>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">LineshoP</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarColor02">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="#">
+								<i>The best online store, for real.</i>
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
-
+		<div class="row">
+			<table class="table table-hover text-center">
+				<tr class="table-active">
+					<th scope="row">
+						{% if app.user %}
+							<div>
+								Welcome
+								{{ app.user.userIdentifier }}
+								you can
+								<a href="{{ path('app_logout') }}" style="color: grey; text-decoration: none;">logout.</a>
+							</div>
+						{% else %}
+							<span>
+								Welcome
+								<a {% if app.request.get('_route') == 'app_login' %} href="login" active {% endif %} style="color: grey; text-decoration: none;">login.</a>
+							</span>
+						{% endif %}
+					</th>
+				</tr>
+			</table>
+			<nav class=" navbar navbar-expand-lg navbar-light bg-light">
+				<div class="d-flex flex-row">
+					<div class="p-2">
+						<a {% if app.request.get('_route') == 'article' %} active {% endif %} href="article" style="text-decoration: none; color: black">
+							<b>Article</b>
+						</a>
+					</div>
+					<div class="p-2">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a {% if app.request.get('_route') == 'createArticle' %} active {% endif %} href="createArticle" style="text-decoration: none; color: black">
+								<b>All Categories</b>
+							</a>
+						{% endif %}
+					</div>
+					<div class="p-2">
+						<a {% if app.request.get('_route') == 'categorie' %} active {% endif %} href="categorie" style="text-decoration: none; color: black">
+							<b>Consoles</b>
+						</a>
+					</div>
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="p-2">
+							<a {% if app.request.get('_route') == 'createCategorie' %} active {% endif %} href="createCategorie" style="text-decoration: none; color: black">
+								<b>Jeux</b>
+							</a>
+						{% endif %}
+						{% if app.user %}
+							<div class="p-2">
+								<a {% if app.request.get('_route') == 'logout' %} active {% endif %} href="logout" style="text-decoration: none; color: black">
+									<b>Log Out</b>
+								</a>
+							</div>
+						{% else %}
+							<div class="p-2">
+								<a {% if app.request.get('_route') == 'login' %} active {% endif %} href="login" style="text-decoration: none; color: black">
+									<b>Log In</b>
+								</a>
+							</div>
+							<div class="p-2">
+								<a {% if app.request.get('_route') == 'register' %} active {% endif %} href="register" style="text-decoration: none; color: black">
+									<b>Inscription</b>
+								</a>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</nav>
+		</div>
 		{% block body %}{% endblock %}
 	</body>
 </html>
