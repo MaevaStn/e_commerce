@@ -65,7 +65,6 @@ class ArticleController extends AbstractController
                     ])
                 ],
             ])
-            ->add('imageArticle', FileType::class)
             ->add('prixArticle', TextType::class)
             ->add('descriptionArticle', TextType::class)
             ->add('categorie', EntityType::class, [
