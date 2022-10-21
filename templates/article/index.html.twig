@@ -17,29 +17,19 @@
 		}
 	</style>
 
-	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
 
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'C:/symfony/commerce/e_commerce/src/Controller/ArticleController.php'|file_link(0) }}">src/Controller/ArticleController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'C:/symfony/commerce/e_commerce/templates/article/index.html.twig'|file_link(0) }}">templates/article/index.html.twig</a>
-				</code>
-			</li>
-		</ul>
-	</div>
 	{% for art in articles %}
 		<p>{{art.getNomArticle}}
-			{{art.getImageArticle}}
+			<img src={{art.getImageArticle}}>
 			{{art.getPrixArticle}}
 			{{art.getDescriptionArticle}}
-			{{art.getId}}</p>
+			{% if app.user %}
+				<a href="{{ path('cart_add', {'id': art.getId})}}" class="btn btn-success float-right">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket-fill" viewbox="0 0 16 16">
+						<path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z"/>
+					</svg>
+				</a>
+			{% endif %}
+		</p>
 	{% endfor %}
 {% endblock %}
