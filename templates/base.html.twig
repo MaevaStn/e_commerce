@@ -12,6 +12,11 @@
 		<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity=" sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin=" anonymous"></script>
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
+			<link
+			rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+			<!-- JavaScript Bundle with Popper -->
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
 		{% endblock %}
 
 		{% block javascripts %}
@@ -39,10 +44,12 @@
 						<a class="nav-link {% if app.request.get('_route') == 'createCategorie' %}active{% endif %}" href="createCategorie">Add Catégorie</a>
 					</li>
 				{% endif %}
-
 				{% if app.user %}
 					<li class="nav-item">
 						<a class="nav-link {% if app.request.get('_route') == 'logout' %}active{% endif %}" href="logout">Log Out</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link {% if app.request.get('_route') == 'cart' %}active{% endif %}" href="cart">Panier</a>
 					</li>
 				{% else %}
 					<li class="nav-item">

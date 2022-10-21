@@ -54,7 +54,7 @@ class ArticleController extends AbstractController
                 'choice_label' => 'nomCategorie',
                 'choice_value' => 'id',
             ])
-            ->add('photo', FileType::class, [
+            ->add('imageArticle', FileType::class, [
                 'label' => 'image article',
                 //// unmapped means that this field is not associated to any entity property
                 // pas de champp associé au fichier de notre entity : (il n'y a pas de champ qui s'appelle photo)
@@ -77,6 +77,7 @@ class ArticleController extends AbstractController
                     ])
                 ],
             ])
+
             ->add('save', SubmitType::class, ['label' => 'Créer article'])
             ->getForm();
 
@@ -87,12 +88,10 @@ class ArticleController extends AbstractController
 
             $article = new Article();
             $article->setNomArticle($form->getData()['nomArticle']);
-            // Faire une classe Photo ?
-
             $article->setPrixArticle($form->getData()['prixArticle']);
             $article->setDescriptionArticle($form->getData()['descriptionArticle']);
             // on récupére photo et on l'ajoute au niveau de notre formulaire
-            $photo = $form->get('photo')->getData();
+            $article = $form->get('imageArticle')->getData();
             $article->setCategorie($form->getData()['categorie']);
             $entityManager = $doctrine->getManager();
             $entityManager->persist($article);
