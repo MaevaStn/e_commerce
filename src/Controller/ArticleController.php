@@ -86,6 +86,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $form->getData();
 
+
             $article = new Article();
             $article->setNomArticle($form->getData()['nomArticle']);
             $article->setPrixArticle($form->getData()['prixArticle']);
@@ -118,7 +119,7 @@ class ArticleController extends AbstractController
                     // va faire un move du newFilename vers cet endroit :  $this->getParameter('articles_directory'), et cet endroit se trouve dans param au niveau de service.yaml,
                     $image->move(
                         $this->getParameter('articles_directory'),
-                        $newFilename
+                        // $newFilename
                     );
                     // si problème avec affichage :
                 } catch (FileException $e) {

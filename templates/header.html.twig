@@ -50,23 +50,39 @@
 					</tr>
 				</table>
 				<div class="d-flex flex-row">
-					<div class="p-2">
-						<a {% if app.request.get('_route') == 'createArticle' %} active {% endif %} href=" createArticle" style=" text-decoration: none; color: black">
-							<b>All Categories</b>
-						</a>
+
+					<div>
+						<div class="p-2">
+							<a {% if app.request.get('_route') == 'article' %} active {% endif %} href=" article" style=" text-decoration: none; color: black">
+								<b>Jeux</b>
+							</a>
+						</div>
+						<div class="p-2">
+							{% if is_granted('ROLE_ADMIN') %}
+
+								<a {% if app.request.get('_route') == 'createArticle' %} active {% endif %} href=" createArticle" style=" text-decoration: none; color: black">
+									<b>All Categories</b>
+								</a>
+							{% endif %}
+
+						</div>
+						<div class="p-2">
+							<a {% if app.request.get('_route') == 'categorie' %} active {% endif %} href=" categorie" style=" text-decoration: none; color: black">
+								<b>Consoles</b>
+							</a>
+						</div>
+						{% if is_granted('ROLE_ADMIN') %}
+
+							<div class="p-2">
+								<a {% if app.request.get('_route') == 'createCategorie' %} active {% endif %} href=" createCategorie" style=" text-decoration: none; color: black">
+									<b>Jeux</b>
+								</a>
+							{% endif %}
+
+						</div>
 					</div>
-					<div class="p-2">
-						<a {% if app.request.get('_route') == 'categorie' %} active {% endif %} href=" categorie" style=" text-decoration: none; color: black">
-							<b>Consoles</b>
-						</a>
-					</div>
-					<div class="p-2">
-						<a {% if app.request.get('_route') == 'createCategorie' %} active {% endif %} href=" createCategorie" style=" text-decoration: none; color: black">
-							<b>Jeux</b>
-						</a>
-					</div>
-				</div>
-			</header>
-		</body>
-	{% endblock %}
+				</header>
+			</body>
+		{% endblock %}
+	</body>
 </html>
