@@ -4,22 +4,22 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row" style="margin-top: 3rem;">
+	<div class="row" style="margin-top: 7rem;">
 		<div class="card text-white bg-dark mt-5 mb-3 m-auto" style="max-width: 50rem; height: 24rem;">
-			<div class="col text-center mt-3">
-				<h1 class="mt-2 mb-4">Sign Up</h1>
+			<div class="col mt-3">
+				<h1 class="mt-2 mb-3 text-center">Sign Up</h1>
 				{{ form_start(registrationForm) }}
-				<div class="col-7 m-auto">
+				<div class="col-7 text-center m-auto">
 					{{ form_row(registrationForm.email, {'label': 'Email'}) }}
 				</div>
-				<div class="col-7 m-auto">
+				<div class="col-7 text-center m-auto">
 					{{ form_row(registrationForm.plainPassword, { 'label': 'Password' })}}
 				</div>
-				<div class="col-8 mt-3">
+				<div class="col-7 m-auto mt-3">
 					{{ form_row(registrationForm.agreeTerms, {'label': "I agree with terms"}) }}
 				</div>
 				<div class="col-7 m-auto">
-					<button type="submit" class="btn btn-secondary mt-1 col-12">Validez</button>
+					<button type="submit" class="btn btn-secondary mt-1 col-12">Create account</button>
 				</div>
 				{{ form_end(registrationForm) }}
 			</div>
