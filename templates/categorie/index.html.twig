@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategorieController!
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 	<style>
@@ -17,26 +16,11 @@
 		}
 	</style>
 
-	<div class="example-wrapper">
-		<h1>Hello
-			{{ controller_name }}! ✅</h1>
-
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'C:/symfony/commerce/e_commerce/src/Controller/CategorieController.php'|file_link(0) }}">src/Controller/CategorieController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'C:/symfony/commerce/e_commerce/templates/categorie/index.html.twig'|file_link(0) }}">templates/categorie/index.html.twig</a>
-				</code>
-			</li>
-		</ul>
+	<div class="col ms-2 mt-4">
+		<h1>Catégorie d'article</h1>
+		{% for cat in categories %}
+			<p class="mt-3">-
+				{{cat.getNomCategorie}}</p>
+		{% endfor %}
 	</div>
-	{% for cat in categories %}
-		<p>{{cat.getNomCategorie}}
-			{{cat.getId}}</p>
-	{% endfor %}
 {% endblock %}

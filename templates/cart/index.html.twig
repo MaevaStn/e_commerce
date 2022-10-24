@@ -4,13 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<div class="bg-light p-3">
-		<h1>Votre panier</h1>
-	</div>
 	{% if items | length > 0 %}
-		<table class="table">
+		<table class="table w-100 m-auto mt-5">
 			<thead>
-				<tr>
+				<tr class="table-default">
 					<th>Produit</th>
 					<th>Prix</th>
 					<th>Quantité</th>
@@ -26,7 +23,7 @@
 						<td>{{item.quantity}}</td>
 						<td>{{item.article.PrixArticle * item.quantity}}</td>
 						<td>
-							<a href="{{ path('cart_remove', {'id': item.article.id})}}" class="btn btn-danger btn-sm">
+							<a href="{{ path('cart_remove', {'id': item.article.id})}}" class="btn btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewbox="0 0 16 16">
 									<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 								</svg>
@@ -36,18 +33,22 @@
 				{% endfor %}
 			</tbody>
 			<tfoot>
-				<tr>
+				<tr class="table-light">
 					<td colspan="3" class="text-right">Total :</td>
 					<td>{{ total }}</td>
 					<td></td>
 				</tr>
 			</tfoot>
 		</table>
-		<a class="btn btn-secondary" href="article" role="button">Continuez mes achats</a>
-		<a class="btn btn-primary" href="#" role="button">Paiement</a>
+		<div class="col m-auto text-center mt-5">
+			<a class="btn btn-secondary" href="article" role="button">Continuez mes achats</a>
+			<a class="btn btn-dark" href="#" role="button">Paiement</a>
+		</div>
 	{% else %}
-		<p>Panier vide !</p>
-		<a class="btn btn-secondary" href="article" role="button">Commencer mes achats</a>
+		<div class="col mt-5 text-center">
+			<h3>Panier vide !</h3>
+			<a class="btn btn-outline-secondary mt-4" href="article" role="button">Commencer mes achats</a>
+		</div>
 	{% endif %}
 
 {% endblock %}
