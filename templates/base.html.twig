@@ -78,7 +78,7 @@
 						</div>
 						<div class="p-2">
 							<a {% if app.request.get('_route') == 'categorie' %} active {% endif %} href="categorie" style="text-decoration: none; color: black">
-								<b>Consoles</b>
+								<b>Catégorie</b>
 							</a>
 						</div>
 						{% if app.user %}
@@ -92,9 +92,14 @@
 							<div class="p-2">
 								{% if is_granted('ROLE_ADMIN') %}
 									<a {% if app.request.get('_route') == 'createArticle' %} active {% endif %} href="createArticle" style="text-decoration: none; color: black">
-										<b>Catégories</b>
+										<b>Créer article</b>
 									</a>
 								{% endif %}
+							</div>
+							<div class="p-2">
+								<a {% if app.request.get('_route') == 'cart' %} active {% endif %} href="cart" style="text-decoration: none; color: black">
+									<b>Panier</b>
+								</a>
 							</div>
 						{% else %}
 							<div class="p-2">
