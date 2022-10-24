@@ -19,10 +19,13 @@
 
 
 	{% for art in articles %}
-		<p>{{art.getNomArticle}}
-			{{art.getPrixArticle}}
-			{{art.getDescriptionArticle}}
-			<img src="{{ asset('/images/'~ art.getImageFileName)}}">
-		</p>
+		<div class="card" style="width: 18rem;">
+			<img src="{{ asset('/images/'~ art.getImageFileName)}}" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">{{art.getNomArticle}}</h5>
+				<p class="card-text">{{art.getDescriptionArticle}}</p>
+				<h6>{{art.getPrixArticle}}</h6>
+			</div>
+		</div>
 	{% endfor %}
 {% endblock %}
