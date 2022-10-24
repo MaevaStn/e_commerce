@@ -29,6 +29,11 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $Categorie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imageFileName = null;
+
+    // // ajout propriété de type string qui contient le nom du fichier que je vais uploader $brochureFilename
+
     // #[ORM\Column(length: 255)]
     // private ?string $type = null;
 
@@ -100,24 +105,15 @@ class Article
         return $this;
     }
 
-    public function getType(): ?string
+    public function getImageFileName(): ?string
     {
-        return $this->type;
+        return $this->imageFileName;
     }
 
-    // // ajout propriété de type string qui contient le nom du fichier que je vais uploader $brochureFilename
-    // // #[ORM\Column(type: 'string')]
-    // private $brochureFilename;
+    public function setImageFileName(string $imageFileName): self
+    {
+        $this->imageFileName = $imageFileName;
 
-    // public function getBrochureFilename()
-    // {
-    //     return $this->brochureFilename;
-    // }
-
-    // public function setBrochureFilename($brochureFilename)
-    // {
-    //     $this->brochureFilename = $brochureFilename;
-
-    //     return $this;
-    // }
+        return $this;
+    }
 }

@@ -18,8 +18,8 @@ class Categorie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomCategorie = null;
 
-    // #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Article::class)]
-    // private Collection $article;
+    #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Article::class)]
+    private Collection $article;
 
     // public function __construct()
     // {
@@ -64,7 +64,7 @@ class Categorie
     // public function removeArticle(Article $article): self
     // {
     //     if ($this->article->removeElement($article)) {
-    //         // set the owning side to null (unless already changed)
+    //         //  set the owning side to null (unless already changed)
     //         if ($article->getCategorie() === $this) {
     //             $article->setCategorie(null);
     //         }

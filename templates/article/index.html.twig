@@ -20,10 +20,9 @@
 
 	{% for art in articles %}
 		<p>{{art.getNomArticle}}
-			<img src={{art.getImageArticle}} alt="image">
 			{{art.getPrixArticle}}
 			{{art.getDescriptionArticle}}
-			{{art.getId}}
+			<img src="{{ asset('/images/'~ art.getImageFileName)}}">
 		</p>
 	{% endfor %}
 {% endblock %}
